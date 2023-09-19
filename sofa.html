@@ -1,0 +1,71 @@
+<?php
+   // Report all errors
+   ini_set("error_reporting",E_ALL);
+?>
+<?php
+   // Create new session or connect to existing one
+   session_start()
+?>
+<!-- <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve and validate form data
+    $NHI = $_POST["nhi"];
+    $SName = $_POST["surname"];
+    $FName = $_POST["firstname"];
+
+    // Set cookies
+    setcookie("patient-nhi", $nhi, time() + 3600, "/");
+    setcookie("patient-surname", $surname, time() + 3600, "/");
+    setcookie("patient-firstname", $firstname, time() + 3600, "/");
+}
+?> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOFA Score Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<?php
+            //set the cookies to only exsits for a spicific time 
+            if(isset($_POST["FName"]))
+            setcookie("FName",$_POST["FName"],time()+36000,"/");
+            if(isset($_POST["SName"]))
+            setcookie("SName",$_POST["SName"],time()+36000,"/");
+            if (isset($_POST["NHI"]))
+	         foreach ($_POST["NHI"] as $NHI)
+	          $_POST[$NHI]=1;
+             echo "the cookie is done"
+            ?>
+<body>
+    <h1>SOFA Score Calculator</h1>
+    <h2>Patient Details</h2>
+    <p>NHI: <?php echo $nhi; ?></p>
+    <p>Surname: <?php echo $surname; ?></p>
+    <p>First Name: <?php echo $firstname; ?></p>
+
+    <form action="result.php" method="post">
+        <!-- Add inputs for each component here -->
+        <?php
+           // dump the post array to see what's there
+           echo "<pre>";
+         //  var_dump($_POST);
+          echo "</pre>";
+           // get the data that was posted 
+           $FName=$_POST["FName"];
+           $SName=$_POST["SName"];
+           $NHI=$_POST["NHI"];
+           echo "<pre>";
+           echo "this is the First Name provided: $FName  \r\n";
+           echo "this is the Surname provided: $SName  \r\n";
+           echo "this is the NHI number provided: $NHI  \r\n";
+           echo "</pre>";
+           
+        ?>
+        <input type="submit" value="Calculate Score">
+    </form>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
