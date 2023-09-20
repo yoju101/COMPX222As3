@@ -75,7 +75,11 @@ session_start();
     <!-- <form method="POST" action="/php/sofa.php"> -->
         <form method="POST" action="sofa.html">
         <label for="nhi">NHI number:</label>
+<<<<<<< HEAD
         <input type="text" id="nhi" name="nhi" pattern="[A-Z]{3}[0-9]{5}" required value=<?php echo $_SESSION["NHI"];?>>
+=======
+        <input type="text" id="nhi" name="nhi" pattern="[A-Z]{3}[0-9]{4}" required value=<?php echo $_SESSION["NHI"];?>>
+>>>>>>> affa61f715f6dcefbe830c6307efd972722f8f96
         <label for="surname">Surname:</label>
         <input type="text" id="surname" name="surname" required value=<?php echo $_POST["SName"];?>>
         <label for="firstname">First Name:</label>

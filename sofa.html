@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- <?php
    // Report all errors
    ini_set("error_reporting",E_ALL);
@@ -6,6 +7,16 @@
    // Create new session or connect to existing one
    session_start()
 ?> -->
+=======
+<?php
+   // Report all errors
+   ini_set("error_reporting",E_ALL);
+?>
+<?php
+   // Create new session or connect to existing one
+   session_start()
+?>
+>>>>>>> affa61f715f6dcefbe830c6307efd972722f8f96
 <!-- <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and validate form data
@@ -27,7 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>SOFA Score Calculator</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<<<<<<< HEAD
             <!-- <?php
+=======
+<?php
+>>>>>>> affa61f715f6dcefbe830c6307efd972722f8f96
             //set the cookies to only exsits for a spicific time 
             if(isset($_POST["FName"]))
             setcookie("FName",$_POST["FName"],time()+36000,"/");
@@ -37,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	         foreach ($_POST["NHI"] as $NHI)
 	          $_POST[$NHI]=1;
              echo "the cookie is done"
+<<<<<<< HEAD
             ?> -->
 <body>
     <h1>SOFA Score Calculator</h1>
@@ -49,6 +65,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Patient Details</h2>
         <!-- Add inputs for each component here -->
         <!-- <?php
+=======
+            ?>
+<body>
+    <h1>SOFA Score Calculator</h1>
+    <h2>Patient Details</h2>
+    <p>NHI: <?php echo $nhi; ?></p>
+    <p>Surname: <?php echo $surname; ?></p>
+    <p>First Name: <?php echo $firstname; ?></p>
+
+    <form action="result.php" method="post">
+        <!-- Add inputs for each component here -->
+        <?php
+>>>>>>> affa61f715f6dcefbe830c6307efd972722f8f96
            // dump the post array to see what's there
            echo "<pre>";
          //  var_dump($_POST);
@@ -62,6 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
            echo "this is the Surname provided: $SName  \r\n";
            echo "this is the NHI number provided: $NHI  \r\n";
            echo "</pre>";
+<<<<<<< HEAD
 
            <p>NHI: <?php echo $NHI; ?></p>
             <p>Surname: <?php echo $SName; ?></p>
@@ -125,6 +155,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      </form>
 
     
+=======
+           
+        ?>
+        <input type="submit" value="Calculate Score">
+    </form>
+
+>>>>>>> affa61f715f6dcefbe830c6307efd972722f8f96
     <script src="js/script.js"></script>
 </body>
 </html>
