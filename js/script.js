@@ -7,7 +7,7 @@ var Coagulation = 150;
 var Liver = 1.2;
 var Kidneys = 1.2;
 
-document.getElementById('respiratory_numeric').addEventListener('input', function() {
+document.getElementById('respiratory_numeric').addEventListener('input', function(){
   selectedRespiratoryValue =document.getElementById('respiratory_numeric').value;
   alert(selectedRespiratoryValue);
   console.log(selectedRespiratoryValue);
