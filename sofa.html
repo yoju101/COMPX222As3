@@ -27,6 +27,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     setcookie("patient-firstname", $FName, time() + 3600, "/");
 }
 ?> 
+<!-- The variables for the cookies -->
+<?php
+$respiratory_binary=$_POST["respiratory_binary"];
+$respiratory_numeric=$_POST["respiratory_numeric"];
+
+$normal=$_POST["normal"];
+$dopamine =$_POST["dopamine "];
+$epinephrine=$_POST["epinephrine"];
+$norepinephrine=$_POST["norepinephrine"];
+$low_MAP=$_POST["low_MAP"];
+
+$nervous_numeric=$_POST["nervous_numeric"];
+$Coagulation=$_POST["Coagulation"];
+$liver=$_POST["liver"];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,15 +74,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form id="respiratory"  method="post">
         <h2>Respiratory System</h2>
-        <label for="respiratory_binary">Is the patient using mechanical ventilation?</label>
+        <!-- <label for="respiratory_binary">Is the patient using mechanical ventilation?</label>
         <select id="respiratory_binary" name="respiratory_binary" required>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
-        </select>
+        </select> -->
+        
+            <label for="respiratory_binary">Is the patient using mechanical ventilation? Tick for Yes</label>
+            <input type="checkbox" id="respiratory_binary" name="respiratory_binary" value="Yes"> 
+            
         <label for="respiratory_numeric">What is your Respiratory System rate PaO2/FiO2 mmHg</label>
         <input type="number" id="respiratory_numeric" name="respiratory_numeric" step="0.01" required placeholder="e.g. 400 mmHg" >
         
-        <script>
+        <!-- <script>
             document.getElementById('respiratory_numeric').addEventListener('input', function() {
             selectedRespiratoryValue =document.getElementById('respiratory_numeric').value;
             console.log(selectedRespiratoryValue , "the respiratory_numeric value ");
@@ -75,53 +94,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
         document.getElementById('respiratory_binary').addEventListener('change', function() {
             selectedRespiratoryBool = document.getElementById('respiratory_binary').value;
-            console.log(selectedRespiratoryBool , " venterlator yes or no");
+            console.log(selectedRespiratoryBool , "checked status");
         });
-        </script>
+        </script> -->
 
 
         <h2>Nervous System</h2>
     <label for="nervous_numeric">Central nervous system (Glasgow coma scale)</label>
     <input type="number" id="nervous_numeric" name="nervous_numeric" step="0.01" placeholder =" e.g. 15" >
 
-    <script>
+    <!-- <script>
             document.getElementById('nervous_numeric').addEventListener('input', function() {
             selectedCNS =document.getElementById('nervous_numeric').value;
             console.log(selectedCNS , "the nervous_numeric value ");
         });
-        </script>
+    </script> -->
 
     <!-- Cardiovascular System -->
-    <h2>Cardiovascular System</h2>
+    <!-- <h2>Cardiovascular System</h2>
     <label for="cardiovascular1">Cardiovascular system (Mean arterial pressure OR administration of vasopressors required):</label>
-    <input type="number" id="cardiovascular1" name="cardiovascular1" step="0.01" placeholder =" e.g. 80 mmHg">
+    <input type="number" id="cardiovascular1" name="cardiovascular1" step="0.01" required placeholder =" e.g. 80 mmHg">
     <label for="cardiovascular2">Parameter 2:</label>
     <input type="number" id="cardiovascular2" name="cardiovascular2">
-    <!-- Add inputs for the remaining cardiovascular parameters as needed -->
+    Add inputs for the remaining cardiovascular parameters as needed -->
+
+    <h2>Cardiovascular System</h2>
+    <label for="cardiovascular">Cardiovascular system:</label>
+    <select id="cardiovascular" name="cardiovascular">
+    <option id="normal" value="normal">Normal (Mean arterial pressure ≥ 70 mmHg)</option>
+    <option id="dopamine" value="dopamine ">Dopamine ≤ 5 μg/kg/min or dobutamine (any dose)</option>
+    <option id="epinephrine" value="epinephrine">Epinephrine ≤ 0.1 μg/kg/min</option>
+    <option id="norepinephrine" value="norepinephrine">Norepinephrine ≤ 0.1 μg/kg/min</option>
+    <option id="low_MAP" value="low_MAP">MAP < 70 mmHg</option>
+    </select>
+
+    <script>
+        document.getElementById('cardiovascular').addEventListener('change', function() {
+            var selectedValue = this.value;
+        
+            // Use the selectedValue variable in your JavaScript logic
+            console.log(selectedValue);
+        });
+        </script>
 
     <!--  Liver -->
     <h2>Liver</h2>  
     <label for="liver">Liver (Bilirubin (mg/dl))</label>
     <input type="number" id="liver" name="liver" step="0.01" placeholder =" e.g. 1.2 mg/dl">
 
-    <script>
+    <!-- <script>
         document.getElementById('liver').addEventListener('input', function() {
         selectedLiver =document.getElementById('liver').value;
         console.log(selectedLiver , "the liver value ");
     });
-    </script>
+    </script> -->
 
     <!--  Coagulation -->
     <h2>Coagulation</h2>
     <label for="coagulation">Coagulation (Platelets×10^3/μl)</label>
     <input type="number" id="coagulation" name="coagulation" step="0.01" placeholder =" e.g. 150 10^3/μl">
 
-    <script>
+    <!-- <script>
         document.getElementById('coagulation').addEventListener('input', function() {
         selectedCoagulation =document.getElementById('coagulation').value;
         console.log(selectedCoagulation , "the coagulation value ");
     });
-    </script>
+    </script> -->
 
     <!--  Kidneys -->
     <h2>Kidneys</h2>
@@ -141,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      <script>
         //gobal varibales
         var selectedRespiratoryValue = 400;
-            var selectedRespiratoryBool = "Yes"; //defult value
+            var selectedRespiratoryBool = "No"; //defult value
             var selectedCardiovascular = 70;
             var selectedCNS = 15;
             var selectedCoagulation = 150;
@@ -162,13 +200,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             //submit for checks the valibity for the values and calls the calculate method
             calculate();
+            points = 0;
 
         }
         function calculate(){
             //calls all the diffrent functions that calculates the points based on the input
             checkCNS();
+            
+            console.log(points , "this is the points after calling the two methods ");
         }
         function checkCNS(){
+            console.log(points , "points value before checking the CNS value ");
            //checks the Nervous system
             if(selectedCNS == 15){
                 points += 0; 
@@ -181,36 +223,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if (selectedCNS < 6) {
                 points += 4;
             }
-            console.log(points , "points value for CNS");
-            console.log(selectedCNS , "checkcns()")
+            console.log(points , "points value after checking cns vlaue");
+            console.log(selectedCNS , "the value in the selectedCNS var after checking ");
 
-            if(selectedRespiratoryValue >= 400){
+            //to check the Respiratory 
+            console.log(points , "points value before checking the Respiratory value ");
+            if(selectedRespiratoryValue >= 400 ){
                 points += 0; 
-            }else if (selectedRespiratoryValue < 400) {
+            }else if (selectedRespiratoryValue >= 301 && selectedRespiratoryValue <= 399) {
                  points += 1;
-            } else if (selectedRespiratoryValue < 300 && selectedRespiratoryBool == "No") {
+            } else if (selectedRespiratoryValue >= 201 && selectedRespiratoryValue <= 300 ) {
                     points += 2;
-            } else if (selectedRespiratoryValue < 200 && selectedRespiratoryBool == "Yes") {
+            } else if (selectedRespiratoryValue >= 101 && selectedRespiratoryValue <= 200 && selectedRespiratoryBool == "Yes") {
                 points += 3;
-            } else if (selectedRespiratoryValue < 100 && selectedRespiratoryBool == "Yes") {
+            } else if (selectedRespiratoryValue < 100 && selectedRespiratoryBool == "Yes"){
                 points += 4;
             }
-            console.log(points);
-            console.log(selectedRespiratoryValue , selectedRespiratoryBool );
+            console.log(points , "points value after checking Respiratory  vlaue");
+            console.log(selectedRespiratoryValue , selectedRespiratoryBool , "the value in the Respiratory  var after checking ");
+
+            console.log(points , "points value before checking the platlet value ");
             if(selectedCoagulation >= 150){
                 points += 0; 
-            }else if (selectedCoagulation < 150) {
+            }else if (selectedCoagulation >= 100 && selectedCoagulation <= 149) {
                  points += 1;
-            } else if (selectedCoagulation < 100 ) {
+            } else if (selectedCoagulation >= 50 && selectedCoagulation <= 99 ) {
                     points += 2;
-            } else if (selectedCoagulation < 50 ) {
+            } else if (selectedCoagulation >= 20 && selectedCoagulation <= 49 ) {
                 points += 3;
-            } else if (selectedCoagulation < 20) {
+            } else if (selectedCoagulation <= 19){
                 points += 4;
             }
-            console.log(points , "points value up to coagulation");
-        }
-    
+            console.log(points , "points value after checking platlet vlaue");
+            console.log(selectedCoagulation , "the value in the selectedCoagulation var after checking ");
+
+            //to check the liver
+            console.log(points , "points value before checking the liver value ");
+            if(selectedLiver < 1.2){
+                points += 0; 
+            }else if (selectedLiver >= 1.2 && selectedLiver <= 1.9) {
+                 points += 1;
+            } else if (selectedLiver >= 2.0 && selectedLiver <= 5.9 ) {
+                    points += 2;
+            } else if (selectedLiver >= 6.0 && selectedLiver <= 11.9 ) {
+                points += 3;
+            } else if (selectedLiver > 12.0){
+                points += 4;
+            }
+            console.log(points , "points value after checking liver vlaue");
+            console.log(selectedLiver , "the value in the selectedLiver var after checking ");
+
+            //to check the kidneys
+            console.log(points , "points value before checking the kidneys value ");
+            if(selectedKidneys < 1.2){
+                points += 0; 
+            }else if (selectedKidneys >= 1.2 && selectedKidneys <= 1.9) {
+                 points += 1;
+            } else if (selectedKidneys >= 2.0 && selectedKidneys <= 3.4 ) {
+                    points += 2;
+            } else if (selectedKidneys >= 3.5 && selectedKidneys <= 4.9 ) {
+                points += 3;
+            } else if (selectedKidneys > 5.0){
+                points += 4;
+            }
+            console.log(points , "points value after checking kidneys vlaue");
+            console.log(selectedKidneys , "the value in the kidneys var after checking ");
+        }    
     </script>
 </body>
 
