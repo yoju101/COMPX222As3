@@ -59,15 +59,9 @@ session_start();
             $SName=$_COOKIE["SName"];
             else
             $SName = 1;
-    
-            // if(isset($_COOKIE["NHI"]))
-            // $NHI=$_COOKIE["NHI"];
-            // else
-            // $NHI = 1;
             if( isset( $_SESSION['NHI'] ) ) {
               $_SESSION['NHI'] = $NHI;
             }
-
             ?>
      <form method="POST" action="sofa.php"> 
         <!-- <form method="POST" action="sofa.html"> -->
@@ -84,8 +78,6 @@ session_start();
             session_destroy();
             ?>
     </form>
-    <!-- <button type="submit">Submit</button>  
-    <button type="reset">Reset</button> -->
     <script src="js/script.js"></script>
 </body>
 </html>
